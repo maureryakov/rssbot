@@ -8,7 +8,7 @@ from aiogram.utils.markdown import text
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # инициализируем бота и диспетчер
-bot = Bot(token="2102525803:AAEaZO3kudDFjcqvmUH9E2GamY35*********")
+bot = Bot(token="2102525803:AAEaZO3kudDFj**************")
 dp = Dispatcher(bot)
 
 # обработчик команды /start
@@ -42,6 +42,9 @@ async def generate_rss(message: types.Message):
 
     # после формирования RSS-канала
     rss_feed = feed.rss_str(pretty=True)
-    await message.answer(rss_feed)
+    with open('rss.xml', 'wb') as f:
+        f.write(rss_feed)
+    await message.answer_document(types.InputFile('rss.xml'), caption='RSS-канал')
+
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
